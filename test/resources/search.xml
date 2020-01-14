@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"
+      xmlns:prism="http://prismstandard.org/namespaces/basic/2.0/"
+      xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/"
+      xml:lang="ja">
+    <result>
+        <status>0</status>
+        <message/>
+    </result>
+    <title>Articles</title>
+    <link
+            href="http://xxx.xxx.xx/do?service=3&amp;system=1&amp;pubyearfrom=&amp;pubyearto=&amp;material=%E6%83
+%85%E5%A0%B1%E7%AE%A1%E7%90%86&amp;issn=&amp;cdjournal=&amp;volorder=&amp;article=&amp;author=&amp;af
+fil=&amp;keyword=&amp;abst=&amp;text=&amp;sortflg=&amp;vol=&amp;no=&amp;start=&amp;count=100"/>
+
+    <id>http://xxx.xxx.xx//do?service=3&amp;system=1&amp;pubyearfrom=&amp;pubyearto=&amp;material=%E6%83%
+        85%E5%A0%B1%E7%AE%A1%E7%90%86&amp;issn=&amp;cdjournal=&amp;volorder=&amp;article=&amp;author=&amp;aff
+        il=&amp;keyword=&amp;abst=&amp;text=&amp;sortflg=&amp;vol=&amp;no=&amp;start=&amp;count=100
+    </id>
+    <servicecd>3</servicecd>
+    <updated>2010-04-24T15:13+09:00</updated>
+    <opensearch:totalResults>1</opensearch:totalResults>
+    <opensearch:startIndex>1</opensearch:startIndex>
+    <opensearch:itemsPerPage>1</opensearch:itemsPerPage>
+    <entry>
+        <article_title>
+            <en><![CDATA[Free Internet Access to Traditional Journals]]></en>
+            <ja><![CDATA[学術雑誌のインターネット上での無料アクセス提供]]></ja>
+        </article_title>
+        <article_link>
+            <en>http://www.jstage.jst.go.jp/article/johokanri/41/9/41_678/_article</en>
+            <ja>http://www.jstage.jst.go.jp/article/johokanri/41/9/41_678/_article/-char/ja/</ja>
+        </article_link>
+        <author>
+            <en>
+                <name><![CDATA[Thomas J. Walker]]></name>
+                <name><![CDATA[Soichi, transl. TOKIZANE]]></name>
+            </en>
+            <ja>
+                <name><![CDATA[ウォーカー トーマス J.]]></name>
+                <name><![CDATA[時実 象一 :訳]]></name>
+            </ja>
+        </author>
+        <cdjournal>johokanri</cdjournal>
+        <material_title>
+            <en><![CDATA[Journal of Information Processing and Management]]></en>
+            <ja><![CDATA[情報管理]]></ja>
+        </material_title>
+        <prism:issn>0021-7298</prism:issn>
+        <prism:eIssn>1347-1597</prism:eIssn>
+        <prism:volume>41</prism:volume>
+        <prism:number>9</prism:number>
+        <prism:startingPage>678</prism:startingPage>
+        <prism:endingPage>694</prism:endingPage>
+        <pubyear>1998</pubyear>
+        <joi>JST.JSTAGE/johokanri/41.678</joi>
+        <prism:doi>10.1241/johokanri.41.678</prism:doi>
+        <systemcode>1</systemcode>
+        <systemname>J-STAGE</systemname>
+        <title><![CDATA[学術雑誌のインターネット上での無料アクセス提供]]></title>
+        <link href="http://www.jstage.jst.go.jp/article/johokanri/41/9/41_678/_article/-char/ja/"/>
+        <id>http://www.jstage.jst.go.jp/article/johokanri/41/9/41_678/_article/-char/ja/</id>
+        <updated>2001-04-01T00:00+09:00</updated>
+    </entry>
+</feed>
