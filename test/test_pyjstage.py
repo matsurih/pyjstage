@@ -1,23 +1,33 @@
 from src.pyjstage import Pyjstage
 from service import Service
-from datetime import datetime
+from status import Status
+from result import Result
 
 
 class TestPyjstage:
     def __init__(self):
         self.pyjstage = Pyjstage()
 
-    def test_list(self):
-        self.pyjstage.list(issn='2186-6619')
-
-    def test_search(self):
-        ret = self.pyjstage.search(issn='2186-6619', count=1)
-        assert ret.status == 0
-        assert ret.link == 'http://api.jstage.jst.go.jp/searchapi/do?service=3&issn=2186-6619&count=1'
-        assert ret.servicecd == 3
+    @staticmethod
+    def commons(ret: Result):
+        assert ret.status == Status.OK.value
         assert ret.message is None
         assert ret.total_results > 0
         assert ret.start_index == 1
+
+    def test_list(self):
+        ret = self.pyjstage.list(issn='2186-6619')
+        self.commons(ret)
+        assert ret.link == 'http://api.jstage.jst.go.jp/searchapi/do?service=2&issn=2186-6619'
+        assert ret.servicecd == Service.LIST.value
+        assert ret.items_per_page > 0
+        assert len(ret.entries) > 0
+
+    def test_search(self):
+        ret = self.pyjstage.search(issn='2186-6619', count=1)
+        self.commons(ret)
+        assert ret.link == 'http://api.jstage.jst.go.jp/searchapi/do?service=3&issn=2186-6619&count=1'
+        assert ret.servicecd == Service.SEARCH.value
         assert ret.items_per_page == 1
         assert len(ret.entries) == 1
 
@@ -60,4 +70,4 @@ class TestPyjstage:
 
 if __name__ == '__main__':
     tp = TestPyjstage()
-    tp.test_search()
+    tp.test_list()

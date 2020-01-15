@@ -1,14 +1,16 @@
 from lxml import etree
 from src.result import Result, ErrorResult, ListResult, SearchResult
 from datetime import datetime
+import re
 
 
 class Parser:
     def __init__(self):
-        pass
+        self.regex = re.compile(r'\n* +')
 
     def parse(self, xml_text: bytes) -> Result:
         result = Result()
+
         root = etree.fromstring(xml_text)
         result.xmlns = root.nsmap
         result.xmlns['xml'] = 'http://www.w3.org/XML/1998/namespace'
@@ -17,8 +19,8 @@ class Parser:
         result.encoding = etree.ElementTree(root).docinfo.encoding
         result.servicecd = int(root.find('./servicecd', result.xmlns).text)
         result.title = root.find('./title', result.xmlns).text
-        result.link = root.find('./link', result.xmlns).attrib['href']
-        result.id = root.find('./id', result.xmlns).text
+        result.link = self.regex.sub('', root.find('./link', result.xmlns).attrib['href'])
+        result.id = self.regex.sub('', root.find('./id', result.xmlns).text)
         result.updated = datetime.fromisoformat(root.find('./updated', result.xmlns).text)
         result.total_results = int(root.find('./opensearch:totalResults', result.xmlns).text)
         result.start_index = int(root.find('./opensearch:startIndex', result.xmlns).text)
@@ -33,7 +35,7 @@ class Parser:
         elif result.servicecd == 3:
             rresult = SearchResult(result)
         else:
-            return ErrorResult(root, result)
+            return ErrorResult(result)
         return rresult
 
 
