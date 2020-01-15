@@ -1,6 +1,6 @@
-from src.result import SearchResult, ListResult
+from src.result import Result
+from src.parser import Parser
 from src.service import Service
-from typing import List
 from urllib.parse import quote
 import requests
 
@@ -8,7 +8,7 @@ import requests
 class Pyjstage:
     def __init__(self, domain: str = 'http://api.jstage.jst.go.jp/searchapi/do?'):
         self.domain = domain
-        pass
+        self.parser = Parser()
 
     def list(
             self,
@@ -18,18 +18,17 @@ class Pyjstage:
             issn: str = None,
             cdjournal: str = None,
             volorder: str = None
-    ) -> str:
+    ) -> Result:
         url = self.build_query(
-            service=2,
+            service=Service.LIST.value,
             pubyearfrom=pubyearfrom,
             pubyearto=pubyearto,
             material=material,
             issn=issn,
             cdjournal=cdjournal,
             volorder=volorder)
-        print(url)
-        result = requests.get(url)
-        return result.text
+        response = requests.get(url)
+        return self.parser.parse(response.text.encode('utf-8'))
 
     def search(
             self,
@@ -49,14 +48,14 @@ class Pyjstage:
             no: int = None,
             start: int = None,
             count: int = None
-    ) -> str:
+    ) -> Result:
         """
 
         start: How many offsets you want to set, default 0.
         count: How many results you want to fetch, max & default is 1000.
         """
         url = self.build_query(
-            service=3,
+            service=Service.SEARCH.value,
             pubyearfrom=pubyearfrom,
             pubyearto=pubyearto,
             material=material,
@@ -74,11 +73,9 @@ class Pyjstage:
             start=start,
             count=count
         )
-        print(url)
-        result = requests.get(url)
-        result.encoding = result.apparent_encoding
-        print(result.encoding)
-        return result.text
+        response = requests.get(url)
+        result = self.parser.parse(response.text.encode('utf-8'))
+        return result
 
     def build_query(self, **kwargs):
         return self.domain + '&'.join(
