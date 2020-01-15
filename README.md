@@ -8,4 +8,4 @@
 - TBD
 
 ## License
-- MIT License, see LICENSE file.
+- MIT License, see [LICENSE](https://github.com/matsurih/pyjstage/blob/master/LICENSE) file.
