@@ -1,7 +1,7 @@
-from src.result import Result
-from src.parser import Parser
-from src.service import Service
-from src.order import ListOrder, SearchOrder
+from pyjstage.result import Result
+from pyjstage.parser import Parser
+from pyjstage.service import Service
+from pyjstage.order import ListOrder, SearchOrder
 from urllib.parse import quote
 import requests
 

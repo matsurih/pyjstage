@@ -1,4 +1,4 @@
-from src.pyjstage import Pyjstage
+from pyjstage.pyjstage import Pyjstage
 from service import Service
 from status import Status
 from result import Result
