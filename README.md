@@ -8,4 +8,4 @@
 - TBD
 
 ## License
-- TBD
+- MIT License, see LICENSE file.
