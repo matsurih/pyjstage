@@ -66,8 +66,3 @@ class TestPyjstage:
         assert query == 'http://api.jstage.jst.go.jp/searchapi/do?service=3&pubyearfrom=2015&pubyearto=2019' \
                         '&material=material&article=article&author=author&affile=affile&keyword=keyword&abst=abst' \
                         '&text=text&issn=issn&cdjournal=cdjournal&sortfig=sortfig&vol=vol&no=no&start=start&count=count'
-
-
-if __name__ == '__main__':
-    tp = TestPyjstage()
-    tp.test_list()

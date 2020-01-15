@@ -30,9 +30,3 @@ class TestResult:
         assert ret.start_index == 1
         assert ret.items_per_page == 1
         assert len(ret.entries) == 1
-
-
-if __name__ == '__main__':
-    tr = TestResult()
-    tr.test_parse_list()
-    tr.test_parse_search()
