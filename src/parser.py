@@ -1,14 +1,27 @@
 from lxml import etree
-from src.result import Result, ErrorResult, ListResult, SearchResult
+from result import Result, ListResult, SearchResult
+from status import Status
 from datetime import datetime
 import re
 
 
 class Parser:
+    """Parser Class"""
     def __init__(self):
+        """Initialize Parser class"""
         self.regex = re.compile(r'\n* +')
 
     def parse(self, xml_text: bytes) -> Result:
+        """Parse XML returned from J-STAGE API
+
+        Args:
+            xml_text: raw xml text's bytes encoded by UTF-8
+        Returns:
+            Result object which contains meta data and contents.
+        Raises:
+            JstageError: error depending on j-stage api
+            JstageWarning: warning depending on j-stage api
+        """
         result = Result()
 
         root = etree.fromstring(xml_text)
@@ -26,16 +39,16 @@ class Parser:
         result.start_index = int(root.find('./opensearch:startIndex', result.xmlns).text)
         result.items_per_page = int(root.find('./opensearch:itemsPerPage', result.xmlns).text)
         result.entries = list(root.findall('./entry', result.xmlns))
-        result.status = int(root.find('./result/status', result.xmlns).text)
+        result.status = root.find('./result/status', result.xmlns).text
         result.message = root.find('./result/message', result.xmlns).text
-        if result.status != 0:
-            return ErrorResult(result)
+        Status.divide(result.status, result.message)
         if result.servicecd == 2:
             rresult = ListResult(result)
         elif result.servicecd == 3:
             rresult = SearchResult(result)
         else:
-            return ErrorResult(result)
+            raise Exception('Undefined service code')
+
         return rresult
 
 

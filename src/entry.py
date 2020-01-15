@@ -1,42 +1,76 @@
 class Entry:
-    issn = None
-    eissn = None
-    cdjournal = None
-    material_title = None
-    volume = None
-    number = None
-    starting_page = None
-    pubyear = None
-    systemcode = None
-    systemname = None
-    title = None
-    link = None
-    id = None
-    updated = None
+    """Base class for Entry
+
+    Attributes:
+        issn: xxx
+        eissn: xxx
+        cdjournal: xxx
+        material_title: xxx
+        volume: xxx
+        number: xxx
+        starting_page: xxx
+        pubyear: xxx
+        systemcode: xxx
+        systemname: xxx
+        title: xxx
+        link: xxx
+        id: xxx
+        updated: xxx
+    """
+    def __init__(self):
+        """Initialize Entry class"""
+        self.issn = None
+        self.eissn = None
+        self.cdjournal = None
+        self.material_title = None
+        self.volume = None
+        self.number = None
+        self.starting_page = None
+        self.pubyear = None
+        self.systemcode = None
+        self.systemname = None
+        self.title = None
+        self.link = None
+        self.id = None
+        self.updated = None
+
+    def __str__(self):
+        return str(self.__dict__.items())
 
 
 class ListEntry(Entry):
-    vols_title = {}
-    vols_link = {}
-    publisher_name = None
-    publisher_url = {}
+    """Entry class for List API
 
+    Attributes:
+        vols_title: xxx
+        vols_link: xxx
+        publisher_name: xxx
+        publisher_url: xxx
+    """
     def __init__(self):
+        """Initialize ListEntry class"""
         super().__init__()
-
-    def __str__(self):
-        return str(self.__dict__.items())
+        self.vols_title = {}
+        self.vols_link = {}
+        self.publisher_name = None
+        self.publisher_url = {}
 
 
 class SearchEntry(Entry):
-    article_title = {}
-    article_link = None
-    author = None
-    ending_page = None
-    doi = None
+    """Entry class for Search API
 
+    Attributes:
+        article_title: xxx
+        article_link: xxx
+        author: xxx
+        ending_page: xxx
+        doi: xxx
+    """
     def __init__(self):
+        """Initialize SearchEntry class"""
         super().__init__()
-
-    def __str__(self):
-        return str(self.__dict__.items())
+        self.article_title = {}
+        self.article_link = None
+        self.author = None
+        self.ending_page = None
+        self.doi = None

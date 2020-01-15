@@ -1,14 +1,27 @@
 from src.result import Result
 from src.parser import Parser
 from src.service import Service
+from src.order import ListOrder, SearchOrder
 from urllib.parse import quote
 import requests
 
 
 class Pyjstage:
+    """Pyjstage Class
+
+    Attributes:
+        domain: J-STAGE API domain
+        parser: Parser object
+    """
+    # FIXME: 「同一パラメータで複数の検索条件（AND 条件）を指定するときは、半角スペースで区切ります」の対応
     def __init__(self, domain: str = 'http://api.jstage.jst.go.jp/searchapi/do?'):
-        self.domain = domain
-        self.parser = Parser()
+        """Initialize Pyjstage class
+
+        Args:
+            domain: (Optional) J-STAGE API domain
+        """
+        self.domain: str = domain
+        self.parser: Parser = Parser()
 
     def list(
             self,
@@ -17,8 +30,24 @@ class Pyjstage:
             material: str = None,
             issn: str = None,
             cdjournal: str = None,
-            volorder: str = None
+            volorder: ListOrder = None
     ) -> Result:
+        # FIXME: docstring
+        """Access LIST API
+
+        Args:
+            pubyearfrom: (Optional) Year you want to search when papers were published from.
+            pubyearto: (Optional) Year you want to search when papers were published to.
+            material: (Optional) xxxx
+            issn: (Optional) ISSN you want to search.
+            cdjournal: (Optional) Journal code you want to search.
+            volorder: (Optional) How order are responses sorted.
+        Returns:
+            Result object which contains meta data and contents
+        Raises:
+            JstageError: Error caused by J-STAGE API
+            JstageWarning: Warning caused by J-STAGE API
+        """
         url = self.build_query(
             service=Service.LIST.value,
             pubyearfrom=pubyearfrom,
@@ -26,7 +55,7 @@ class Pyjstage:
             material=material,
             issn=issn,
             cdjournal=cdjournal,
-            volorder=volorder)
+            volorder=volorder.value)
         response = requests.get(url)
         return self.parser.parse(response.text.encode('utf-8'))
 
@@ -43,16 +72,37 @@ class Pyjstage:
             text: str = None,
             issn: str = None,
             cdjournal: str = None,
-            sortfig: str = None,
+            sortfig: SearchOrder = None,
             vol: int = None,
             no: int = None,
             start: int = None,
             count: int = None
     ) -> Result:
-        """
+        """Access SEARCH API
 
-        start: How many offsets you want to set, default 0.
-        count: How many results you want to fetch, max & default is 1000.
+        Longer detail
+
+        Args:
+            pubyearfrom: xxx
+            pubyearto: xxx
+            material: xxx
+            article: xxx
+            author: xxx
+            affile: xxx
+            keyword: xxx
+            abst: xxx
+            text: xxx
+            issn: xxx
+            cdjournal: xxx
+            sortfig: xxx
+            vol: xxx
+            no: xxx
+            start: How many offsets you want to set, default 0.
+            count: How many results you want to fetch, max & default is 1000.
+        Returns:
+            Xxxx
+        Raises:
+            xxxError: xxx
         """
         url = self.build_query(
             service=Service.SEARCH.value,
@@ -67,7 +117,7 @@ class Pyjstage:
             text=text,
             issn=issn,
             cdjournal=cdjournal,
-            sortfig=sortfig,
+            sortfig=sortfig.value,
             vol=vol,
             no=no,
             start=start,
@@ -78,12 +128,15 @@ class Pyjstage:
         return result
 
     def build_query(self, **kwargs):
+        """Build url with queries
+
+        Args:
+            kwargs: key-value pairs for querying
+        Returns:
+            URL-string which can access J-STAGE API
+        Raises:
+            xxxError: Error
+        """
         return self.domain + '&'.join(
             [f'{quote(k, encoding="utf8")}={quote(str(v), encoding="utf8")}' for k, v in kwargs.items() if v is not None]
         )
-
-
-if __name__ == '__main__':
-    pyjstage = Pyjstage()
-    res = pyjstage.search(abst='統合失調症', count=3)
-    print(res)

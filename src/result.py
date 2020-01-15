@@ -1,36 +1,82 @@
-from typing import Dict
+from typing import Dict, Optional, List
 import re
 from datetime import datetime
 from entry import ListEntry, SearchEntry
+from lxml import etree
 
 
 class Result:
-    encoding = None
-    xml_version = None
-    xmlns: Dict[str, str] = None
-    xmlns_prism: str = None
-    xmlns_opensearch: str = None
-    xml_lang: str = None
-    status: int = None
-    message: str = None
-    title: str = None
-    link: str = None
-    id: int = None
-    servicecd: int = None
-    updated: datetime = None
-    total_results = None
-    start_index = None
-    items_per_page = None
-    entries = []
+    """Base class for Result
+    Attributes:
+        encoding: xxx
+        xml_version: xxx
+        xmlns: xxx
+        xml_lang: xxx
+        status: xxx
+        message: xxx
+        title: xxx
+        link: xxx
+        id: xxx
+        servicecd: xxx
+        updated: xxx
+        total_results: xxx
+        start_index: xxx
+        items_per_page: xxx
+        entries: xxx
+    """
+    def __init__(self):
+        self.encoding: Optional[str] = None
+        self.xml_version: Optional[str] = None
+        self.xmlns: Dict[str, str] = {}
+        self.xml_lang: Optional[str] = None
+        self.status: str = Optional[None]
+        self.message: Optional[str] = None
+        self.title: Optional[str] = None
+        self.link: Optional[str] = None
+        self.id: Optional[str] = None
+        self.servicecd: Optional[str] = None
+        self.updated: Optional[datetime] = None
+        self.total_results: Optional[int] = None
+        self.start_index: Optional[int] = None
+        self.items_per_page: Optional[int] = None
+        self.entries: List[etree] = []
+        self.entries_temp: List[etree] = []
 
+    def __finish_setup(self):
+        """remove unused temporary attribute"""
+        del self.entries_temp
 
-class ErrorResult(Result):
-    def __init__(self, result: Result = None):
-        print(result.status, result.message)
+    def __str__(self):
+        return str(self.__dict__.items())
 
 
 class SearchResult(Result):
+    """Search Result Class
+
+    Attributes:
+        encoding: xxx
+        xml_version: xxx
+        xmlns: xxx
+        xml_lang: xxx
+        status: xxx
+        message: xxx
+        title: xxx
+        link: xxx
+        id: xxx
+        servicecd: xxx
+        updated: xxx
+        total_results: xxx
+        start_index: xxx
+        items_per_page: xxx
+        entries: xxx
+    """
     def __init__(self, result: Result):
+        """Initialize SearchResult class
+
+        Args:
+            result: Result object
+        """
+        super().__init__()
         self.encoding = result.encoding
         self.xml_version = result.xml_version
         self.xmlns = result.xmlns
@@ -82,17 +128,36 @@ class SearchResult(Result):
             ent.id = e.find('./id', self.xmlns).text.replace('\n', '').strip()
             ent.updated = datetime.fromisoformat(e.find('./updated', self.xmlns).text.replace('\n', '').strip())
             self.entries.append(ent)
-        self.finish_setup()
-
-    def finish_setup(self):
-        del self.entries_temp
-
-    def __str__(self):
-        return str(self.__dict__.items())
+        self.__finish_setup()
 
 
 class ListResult(Result):
+    """List Result Class
+
+    Attributes:
+        encoding: xxx
+        xml_version: xxx
+        xmlns: xxx
+        xml_lang: xxx
+        status: xxx
+        message: xxx
+        title: xxx
+        link: xxx
+        id: xxx
+        servicecd: xxx
+        updated: xxx
+        total_results: xxx
+        start_index: xxx
+        items_per_page: xxx
+        entries: xxx
+    """
     def __init__(self, result: Result = None):
+        """Initialize ListResult class
+
+        Args:
+            result: Result object
+        """
+        super().__init__()
         self.encoding = result.encoding
         self.xml_version = result.xml_version
         self.xmlns = result.xmlns
@@ -144,10 +209,4 @@ class ListResult(Result):
             ent.id = e.find('./id', self.xmlns).text.replace('\n', '').strip()
             ent.updated = datetime.fromisoformat(e.find('./updated', self.xmlns).text.replace('\n', '').strip())
             self.entries.append(ent)
-        self.finish_setup()
-
-    def finish_setup(self):
-        del self.entries_temp
-
-    def __str__(self):
-        return str(self.__dict__.items())
+        self.__finish_setup()
