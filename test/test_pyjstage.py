@@ -1,5 +1,6 @@
 from src.pyjstage import Pyjstage
 from service import Service
+from datetime import datetime
 
 
 class TestPyjstage:
@@ -7,10 +8,18 @@ class TestPyjstage:
         self.pyjstage = Pyjstage()
 
     def test_list(self):
-        self.pyjstage.list(issn='test')
+        self.pyjstage.list(issn='2186-6619')
 
     def test_search(self):
-        self.pyjstage.search(abst='統合失調症', count=3)
+        ret = self.pyjstage.search(issn='2186-6619', count=1)
+        assert ret.status == 0
+        assert ret.link == 'http://api.jstage.jst.go.jp/searchapi/do?service=3&issn=2186-6619&count=1'
+        assert ret.servicecd == 3
+        assert ret.message is None
+        assert ret.total_results > 0
+        assert ret.start_index == 1
+        assert ret.items_per_page == 1
+        assert len(ret.entries) == 1
 
     def test_build_query(self):
         query = self.pyjstage.build_query(
@@ -47,3 +56,8 @@ class TestPyjstage:
         assert query == 'http://api.jstage.jst.go.jp/searchapi/do?service=3&pubyearfrom=2015&pubyearto=2019' \
                         '&material=material&article=article&author=author&affile=affile&keyword=keyword&abst=abst' \
                         '&text=text&issn=issn&cdjournal=cdjournal&sortfig=sortfig&vol=vol&no=no&start=start&count=count'
+
+
+if __name__ == '__main__':
+    tp = TestPyjstage()
+    tp.test_search()
