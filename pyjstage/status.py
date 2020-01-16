@@ -1,4 +1,5 @@
 import errors
+from typing import Optional
 from enum import Enum
 
 
@@ -14,6 +15,8 @@ class Status(Enum):
     Status.INVALID_YEAR_VALUE: xxx
     Status.INVALID_COUNTS: xxx
     Status.INVALID_ISSN: xxx
+    Status.SYSTEM_FATAL: xxx
+    Status.INVALID_URL: xxx
     Status.LIST_NO_QUERY: xxx
     Status.SEARCH_NO_QUERY: xxx
     Status.LIST_UNSPECIFIED: xxx
@@ -36,7 +39,7 @@ class Status(Enum):
     SEARCH_UNSORTABLE = 'ERR_014'
 
     @staticmethod
-    def divide(status: str, message: str):
+    def divide(status: str, message: Optional[str]):
         """Divide status and raise Error or Warning if necessary.
 
         Args:
