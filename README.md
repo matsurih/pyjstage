@@ -14,7 +14,17 @@ $ python setup.py install
 ```
 
 ## Usage
-- TBD
+```python
+from pyjstage.pyjstage import Pyjstage
+
+
+jstage = Pyjstage()
+
+ret_search = jstage.search(issn='2186-6619', count=1)
+ret_list = jstage.list(issn='2186-6619')
+
+# ret_(search/list) is a (Search/List)Result Object.
+```
 
 ## License
 - MIT License, see [LICENSE](https://github.com/matsurih/pyjstage/blob/master/LICENSE) file.
