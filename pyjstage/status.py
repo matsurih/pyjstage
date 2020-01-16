@@ -1,4 +1,4 @@
-from errors import *
+import errors
 from enum import Enum
 
 
@@ -49,32 +49,32 @@ class Status(Enum):
         if status == Status.OK.value:
             pass
         elif status == Status.NO_RESULTS.value:
-            raise NoResultsError(message)
+            raise errors.NoResultsError(message)
         elif status == Status.TOO_MANY_RESULTS.value:
-            raise TooManyResultsError(message)
+            raise errors.TooManyResultsError(message)
         elif status == Status.TOO_MANY_REQUESTS.value:
-            raise TooManyRequestsError(message)
+            raise errors.TooManyRequestsError(message)
         elif status == Status.INVALID_QUERY.value:
-            raise InvalidQueryError(message)
+            raise errors.InvalidQueryError(message)
         elif status == Status.EMPTY_REQUIRED_FIELD.value:
-            raise EmptyRequiredFieldError(message)
+            raise errors.EmptyRequiredFieldError(message)
         elif status == Status.INVALID_YEAR_VALUE.value:
-            raise InvalidYearValueError(message)
+            raise errors.InvalidYearValueError(message)
         elif status == Status.INVALID_COUNTS.value:
-            raise InvalidCountsError(message)
+            raise errors.InvalidCountsError(message)
         elif status == Status.INVALID_ISSN.value:
-            raise InvalidIssnError(message)
+            raise errors.InvalidIssnError(message)
         elif status == Status.SYSTEM_FATAL.value:
-            raise SystemFatalError(message)
+            raise errors.SystemFatalError(message)
         elif status == Status.INVALID_URL.value:
-            raise InvalidUrlError(message)
+            raise errors.InvalidUrlError(message)
         elif status == Status.LIST_NO_QUERY.value:
-            raise ListNoQueryError(message)
+            raise errors.ListNoQueryError(message)
         elif status == Status.SEARCH_NO_QUERY.value:
-            raise SearchNoQueryError(message)
+            raise errors.SearchNoQueryError(message)
         elif status == Status.LIST_UNSPECIFIED.value:
-            raise ListUnspecifiedError(message)
+            raise errors.ListUnspecifiedError(message)
         elif status == Status.SEARCH_UNSORTABLE.value:
-            raise SearchUnsortableError(message)
+            raise errors.SearchUnsortableError(message)
         else:
             raise Exception(message)

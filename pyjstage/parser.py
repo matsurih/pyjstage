@@ -50,5 +50,3 @@ class Parser:
             raise Exception('Undefined service code')
 
         return rresult
-
-

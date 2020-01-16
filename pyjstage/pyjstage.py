@@ -138,5 +138,8 @@ class Pyjstage:
             xxxError: Error
         """
         return self.domain + '&'.join(
-            [f'{quote(k, encoding="utf8")}={quote(str(v), encoding="utf8")}' for k, v in kwargs.items() if v is not None]
+            [
+                f'{quote(k, encoding="utf8")}={quote(str(v), encoding="utf8")}'
+                for k, v in kwargs.items() if v is not None
+            ]
         )
