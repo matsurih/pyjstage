@@ -14,6 +14,8 @@ $ python setup.py install
 ```
 
 ## Usage
+You can try this library like this:
+
 ```python
 from pyjstage.pyjstage import Pyjstage
 
@@ -25,6 +27,8 @@ ret_list = jstage.list(issn='2186-6619')
 
 # ret_(search/list) is a (Search/List)Result Object.
 ```
+
+If you need more information, See function-definitions in jstage/jstage.py (Sorry for no documentation... I'll write later.)
 
 ## License
 - MIT License, see [LICENSE](https://github.com/matsurih/pyjstage/blob/master/LICENSE) file.
