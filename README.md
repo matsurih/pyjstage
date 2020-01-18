@@ -1,10 +1,11 @@
 # pyjstage
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/matsurih/pyjstage/Python%20package)
 
-## Description
+## Overview
 [J-STAGE WebAPI](https://www.jstage.jst.go.jp/static/pages/OtherJstageServices/TAB2/-char/ja) Wrapper for Python3.
 - J-STAGE is an electronic journal platform for science and technology information in Japan, developed and managed by the Japan Science and Technology Agency (JST). 
-## Requirements
+
+## Prerequisites
 - Python >= 3.6
 
 ## Setup
