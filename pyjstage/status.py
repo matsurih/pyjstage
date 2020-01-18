@@ -8,19 +8,19 @@ class Status(Enum):
 
     Status.OK: No Error
     Status.NO_RESULTS: No results found
-    Status.TOO_MANY_RESULTS: xxx
-    Status.TOO_MANY_REQUESTS: xxx
-    Status.INVALID_QUERY: xxx
-    Status.EMPTY_REQUIRED_FIELD: xxx
-    Status.INVALID_YEAR_VALUE: xxx
-    Status.INVALID_COUNTS: xxx
-    Status.INVALID_ISSN: xxx
-    Status.SYSTEM_FATAL: xxx
-    Status.INVALID_URL: xxx
-    Status.LIST_NO_QUERY: xxx
-    Status.SEARCH_NO_QUERY: xxx
-    Status.LIST_UNSPECIFIED: xxx
-    Status.SEARCH_UNSORTABLE: xxx
+    Status.TOO_MANY_RESULTS: Too many results found
+    Status.TOO_MANY_REQUESTS: Too many requests were occurred
+    Status.INVALID_QUERY: Query is invalid
+    Status.EMPTY_REQUIRED_FIELD: Any of required fields were not filled
+    Status.INVALID_YEAR_VALUE: Year value is invalid
+    Status.INVALID_COUNTS: Count value is invalid
+    Status.INVALID_ISSN: ISSN format is invalid.
+    Status.SYSTEM_FATAL: Fatal error has been occurred.
+    Status.INVALID_URL: URL is invalid
+    Status.LIST_NO_QUERY: Any of required queries were not sent.
+    Status.SEARCH_NO_QUERY: Any of required queries were not sent.
+    Status.LIST_UNSPECIFIED: Cannot specify result.
+    Status.SEARCH_UNSORTABLE: Cannot sort result.
     """
     OK = '0'
     NO_RESULTS = 'ERR_001'
@@ -58,23 +58,23 @@ class Status(Enum):
         elif status == Status.TOO_MANY_REQUESTS.value:
             raise errors.TooManyRequestsError(message)
         elif status == Status.INVALID_QUERY.value:
-            raise errors.InvalidQueryError(message)
+            raise errors.InvalidQueryError(f'{message} invalid.')
         elif status == Status.EMPTY_REQUIRED_FIELD.value:
-            raise errors.EmptyRequiredFieldError(message)
+            raise errors.EmptyRequiredFieldError(f'{message} required.')
         elif status == Status.INVALID_YEAR_VALUE.value:
-            raise errors.InvalidYearValueError(message)
+            raise errors.InvalidYearValueError(f'{message} invalid.')
         elif status == Status.INVALID_COUNTS.value:
-            raise errors.InvalidCountsError(message)
+            raise errors.InvalidCountsError(f'{message} invalid')
         elif status == Status.INVALID_ISSN.value:
-            raise errors.InvalidIssnError(message)
+            raise errors.InvalidIssnError(f'{message} invalid')
         elif status == Status.SYSTEM_FATAL.value:
             raise errors.SystemFatalError(message)
         elif status == Status.INVALID_URL.value:
             raise errors.InvalidUrlError(message)
         elif status == Status.LIST_NO_QUERY.value:
-            raise errors.ListNoQueryError(message)
+            raise errors.ListNoQueryError(f'{message} required')
         elif status == Status.SEARCH_NO_QUERY.value:
-            raise errors.SearchNoQueryError(message)
+            raise errors.SearchNoQueryError(f'{message}: any parameter is required')
         elif status == Status.LIST_UNSPECIFIED.value:
             raise errors.ListUnspecifiedError(message)
         elif status == Status.SEARCH_UNSORTABLE.value:

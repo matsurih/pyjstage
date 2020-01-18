@@ -14,6 +14,10 @@ class Parser:
     def parse(self, xml_text: bytes) -> Result:
         """Parse XML returned from J-STAGE API
 
+        Parse XML document (as bytes object) into Result object.
+        This function may raise Error or Warning.
+        If that error starts with Jstage, that error was occurred by J-STAGE.
+
         Args:
             xml_text: raw xml text's bytes encoded by UTF-8
         Returns:

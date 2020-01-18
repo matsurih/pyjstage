@@ -3,6 +3,7 @@ from pyjstage.parser import Parser
 from pyjstage.service import Service
 from pyjstage.order import ListOrder, SearchOrder
 from urllib.parse import quote
+from typing import List, Union
 import requests
 
 
@@ -13,7 +14,6 @@ class Pyjstage:
         domain: J-STAGE API domain
         parser: Parser object
     """
-    # FIXME: 「同一パラメータで複数の検索条件（AND 条件）を指定するときは、半角スペースで区切ります」の対応
     def __init__(self, domain: str = 'http://api.jstage.jst.go.jp/searchapi/do?'):
         """Initialize Pyjstage class
 
@@ -27,23 +27,26 @@ class Pyjstage:
             self,
             pubyearfrom: int = None,
             pubyearto: int = None,
-            material: str = None,
+            material: Union[str, List[str]] = None,
             issn: str = None,
             cdjournal: str = None,
             volorder: ListOrder = None
     ) -> Result:
-        # FIXME: docstring
         """Access LIST API
+
+        Access LIST API and parse result as ListResult Object.
+        Union[xxx, List[xxx]] arguments can multiple value as list object.
+        If you set that argument as list, Search as 'AND'
 
         Args:
             pubyearfrom: (Optional) Year you want to search when papers were published from.
             pubyearto: (Optional) Year you want to search when papers were published to.
-            material: (Optional) xxxx
+            material: (Optional) Keyword journal should contain.
             issn: (Optional) ISSN you want to search.
             cdjournal: (Optional) Journal code you want to search.
             volorder: (Optional) How order are responses sorted.
         Returns:
-            Result object which contains meta data and contents
+            ListResult object which contains meta data and contents
         Raises:
             JstageError: Error caused by J-STAGE API
             JstageWarning: Warning caused by J-STAGE API
@@ -80,27 +83,29 @@ class Pyjstage:
     ) -> Result:
         """Access SEARCH API
 
-        Longer detail
+        Access SEARCH API and parse result as SearchResult Object.
+        Union[xxx, List[xxx]] arguments can multiple value as list object.
+        If you set that argument as list, Search as 'AND'
 
         Args:
-            pubyearfrom: xxx
-            pubyearto: xxx
-            material: xxx
-            article: xxx
-            author: xxx
-            affile: xxx
-            keyword: xxx
-            abst: xxx
-            text: xxx
-            issn: xxx
-            cdjournal: xxx
-            sortfig: xxx
-            vol: xxx
-            no: xxx
+            pubyearfrom: (Optional) Year you want to search when papers were published from.
+            pubyearto: (Optional) Year you want to search when papers were published to.
+            material: (Optional) Keyword journal should contain.
+            article: Keyword document's title should contain.
+            author: Keyword document's author name should contain.
+            affile: Keyword document's author's affile name should contain.
+            keyword: Keyword document's keyword should contain.
+            abst: Keyword document's abstract should contain.
+            text: Keyword document's body should contain
+            issn: (Optional) ISSN you want to search.
+            cdjournal: (Optional) Journal code you want to search.
+            sortfig: How order are responses sorted.
+            vol: What volume is document contained in journal
+            no: What number is document contained in journal
             start: How many offsets you want to set, default 0.
             count: How many results you want to fetch, max & default is 1000.
         Returns:
-            Xxxx
+            SearchResult object which contains meta data and contents
         Raises:
             xxxError: xxx
         """
@@ -131,15 +136,13 @@ class Pyjstage:
         """Build url with queries
 
         Args:
-            kwargs: key-value pairs for querying
+            kwargs: key-value pairs for querying. If multiple values, use list.
         Returns:
             URL-string which can access J-STAGE API
-        Raises:
-            xxxError: Error
         """
         return self.domain + '&'.join(
             [
-                f'{quote(k, encoding="utf8")}={quote(str(v), encoding="utf8")}'
+                f'{quote(k, encoding="utf8")}={quote(str(v) if type(v) != list else {" ".join(v)}, encoding="utf8")}'
                 for k, v in kwargs.items() if v is not None
             ]
         )

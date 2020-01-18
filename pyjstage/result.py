@@ -8,21 +8,21 @@ from lxml import etree
 class Result:
     """Base class for Result
     Attributes:
-        encoding: xxx
-        xml_version: xxx
-        xmlns: xxx
-        xml_lang: xxx
-        status: xxx
-        message: xxx
-        title: xxx
-        link: xxx
-        id: xxx
-        servicecd: xxx
-        updated: xxx
-        total_results: xxx
-        start_index: xxx
-        items_per_page: xxx
-        entries: xxx
+        encoding: Document encoding, it may always be utf-8.
+        xml_version: XML version.
+        xmlns: What namespaces does this document refer.
+        xml_lang: What language is this document written in.
+        status: Status code.
+        message: Status message.
+        title: returned title
+        link: returned link
+        id: document id, it is always same as link value.
+        servicecd: API service code, 2 is list and 3 is search.
+        updated: When was this document updated.
+        total_results: How many results did API return.
+        start_index: What index do results starts.
+        items_per_page: How many items does a page contain.
+        entries: Entries API returned.
     """
     def __init__(self):
         self.encoding: Optional[str] = None
@@ -54,21 +54,21 @@ class SearchResult(Result):
     """Search Result Class
 
     Attributes:
-        encoding: xxx
-        xml_version: xxx
-        xmlns: xxx
-        xml_lang: xxx
-        status: xxx
-        message: xxx
-        title: xxx
-        link: xxx
-        id: xxx
-        servicecd: xxx
-        updated: xxx
-        total_results: xxx
-        start_index: xxx
-        items_per_page: xxx
-        entries: xxx
+        encoding: Document encoding, it may always be utf-8.
+        xml_version: XML version.
+        xmlns: What namespaces does this document refer.
+        xml_lang: What language is this document written in.
+        status: Status code.
+        message: Status message.
+        title: returned title
+        link: returned link
+        id: document id, it is always same as link value.
+        servicecd: API service code, 2 is list and 3 is search.
+        updated: When was this document updated.
+        total_results: How many results did API return.
+        start_index: What index do results starts.
+        items_per_page: How many items does a page contain.
+        entries: Entries API returned.
     """
     def __init__(self, result: Result):
         """Initialize SearchResult class
@@ -135,21 +135,21 @@ class ListResult(Result):
     """List Result Class
 
     Attributes:
-        encoding: xxx
-        xml_version: xxx
-        xmlns: xxx
-        xml_lang: xxx
-        status: xxx
-        message: xxx
-        title: xxx
-        link: xxx
-        id: xxx
-        servicecd: xxx
-        updated: xxx
-        total_results: xxx
-        start_index: xxx
-        items_per_page: xxx
-        entries: xxx
+        encoding: Document encoding, it may always be utf-8.
+        xml_version: XML version.
+        xmlns: What namespaces does this document refer.
+        xml_lang: What language is this document written in.
+        status: Status code.
+        message: Status message.
+        title: returned title
+        link: returned link
+        id: document id, it is always same as link value.
+        servicecd: API service code, 2 is list and 3 is search.
+        updated: When was this document updated.
+        total_results: How many results did API return.
+        start_index: What index do results starts.
+        items_per_page: How many items does a page contain.
+        entries: Entries API returned.
     """
     def __init__(self, result: Result = None):
         """Initialize ListResult class
