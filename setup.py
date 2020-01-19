@@ -10,10 +10,15 @@ def read_requirements():
     return requirements
 
 
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
 setup(
     name='pyjstage',
-    version='0.0.1',
+    version='v0.0.1',
     description='J-STAGE API wrapper for Python',
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     author='matsurih',
     author_email='pipikapu@gmail.com',
     url='https://github.com/matsurih/pyjstage',

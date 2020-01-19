@@ -1,7 +1,7 @@
-from pyjstage.result import Result
-from pyjstage.parser import Parser
-from pyjstage.service import Service
-from pyjstage.order import ListOrder, SearchOrder
+from result import Result
+from parser import Parser
+from service import Service
+from order import ListOrder, SearchOrder
 from urllib.parse import quote
 from typing import List, Union
 import requests
@@ -66,13 +66,13 @@ class Pyjstage:
             self,
             pubyearfrom: int = None,
             pubyearto: int = None,
-            material: str = None,
-            article: str = None,
-            author: str = None,
-            affile: str = None,
-            keyword: str = None,
-            abst: str = None,
-            text: str = None,
+            material: Union[str, List[str]] = None,
+            article: Union[str, List[str]] = None,
+            author: Union[str, List[str]] = None,
+            affile: Union[str, List[str]] = None,
+            keyword: Union[str, List[str]] = None,
+            abst: Union[str, List[str]] = None,
+            text: Union[str, List[str]] = None,
             issn: str = None,
             cdjournal: str = None,
             sortfig: SearchOrder = None,
@@ -122,7 +122,7 @@ class Pyjstage:
             text=text,
             issn=issn,
             cdjournal=cdjournal,
-            sortfig=sortfig.value,
+            sortfig=sortfig.value if sortfig else None,
             vol=vol,
             no=no,
             start=start,
@@ -142,7 +142,12 @@ class Pyjstage:
         """
         return self.domain + '&'.join(
             [
-                f'{quote(k, encoding="utf8")}={quote(str(v) if type(v) != list else {" ".join(v)}, encoding="utf8")}'
+                f'{quote(k, encoding="utf8")}={quote(str(v) if type(v) is not list else " ".join(v), encoding="utf8")}'
                 for k, v in kwargs.items() if v is not None
             ]
         )
+
+if __name__ == '__main__':
+    pj = Pyjstage()
+    ret = pj.search(text=['統合失調症', '精神分裂病'], count=10)
+    print(ret)
