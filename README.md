@@ -1,5 +1,6 @@
 # pyjstage
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/matsurih/pyjstage/Python%20package)
+![PyPI version](https://img.shields.io/pypi/v/pyjstage)
 
 ## Overview
 [J-STAGE WebAPI](https://www.jstage.jst.go.jp/static/pages/OtherJstageServices/TAB2/-char/ja) Wrapper for Python3.
